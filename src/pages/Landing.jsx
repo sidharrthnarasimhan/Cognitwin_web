@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Brain, TrendingUp, Sparkles, Target, Users, Zap, Building2, ShoppingCart, UtensilsCrossed, Briefcase, Stethoscope, Truck, Code, ArrowRight, CheckCircle2, BarChart3, Layers, Shield } from 'lucide-react';
+import { Brain, TrendingUp, Sparkles, Target, Users, Zap, Building2, ShoppingCart, UtensilsCrossed, Briefcase, Stethoscope, Truck, Code, ArrowRight, CheckCircle2, BarChart3, Layers, Shield, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Landing = () => {
@@ -19,8 +19,17 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      {/* Early Development Banner */}
+      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-2 px-4 text-center text-sm font-medium">
+        <div className="flex items-center justify-center gap-2">
+          <Rocket className="w-4 h-4" />
+          <span>Early in Development • Exciting updates coming soon • Stay tuned!</span>
+          <Rocket className="w-4 h-4" />
+        </div>
+      </div>
+
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-slate-950/80 backdrop-blur-lg border-b border-slate-800/50 z-50">
+      <nav className="fixed top-8 w-full bg-slate-950/80 backdrop-blur-lg border-b border-slate-800/50 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">

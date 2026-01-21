@@ -30,7 +30,7 @@ const Landing = () => {
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-8 w-full bg-slate-950/80 backdrop-blur-lg border-b border-slate-800/50 z-50">
+      <nav className="sticky top-0 w-full bg-slate-950/95 backdrop-blur-lg border-b border-slate-800/50 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
@@ -54,7 +54,7 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-20 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="text-center"

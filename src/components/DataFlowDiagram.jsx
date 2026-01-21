@@ -26,7 +26,7 @@ const DataFlowDiagram = () => {
     })
   };
 
-  const nodes = [
+  const topNodes = [
     {
       icon: Database,
       title: 'Data Sources',
@@ -39,9 +39,11 @@ const DataFlowDiagram = () => {
       title: 'Digital Twin',
       subtitle: 'Graph-based business model',
       gradient: 'from-purple-500 to-pink-500',
-      glow: 'shadow-purple-500/50',
-      split: true
-    },
+      glow: 'shadow-purple-500/50'
+    }
+  ];
+
+  const parallelNodes = [
     {
       icon: Cpu,
       title: 'ML Forecasting',
@@ -54,17 +56,17 @@ const DataFlowDiagram = () => {
       title: 'AI Council',
       subtitle: '6 specialized agents',
       gradient: 'from-orange-500 to-red-500',
-      glow: 'shadow-orange-500/50',
-      merge: true
-    },
-    {
-      icon: Sparkles,
-      title: 'Actionable Insights',
-      subtitle: 'Recommendations & optimizations',
-      gradient: 'from-indigo-500 to-blue-500',
-      glow: 'shadow-indigo-500/50'
+      glow: 'shadow-orange-500/50'
     }
   ];
+
+  const bottomNode = {
+    icon: Sparkles,
+    title: 'Actionable Insights',
+    subtitle: 'Recommendations & optimizations',
+    gradient: 'from-indigo-500 to-blue-500',
+    glow: 'shadow-indigo-500/50'
+  };
 
   return (
     <div className="relative w-full max-w-4xl mx-auto py-20">
@@ -93,7 +95,7 @@ const DataFlowDiagram = () => {
       </div>
 
       {/* Flow Container */}
-      <div className="relative">
+      <div className="relative max-w-5xl mx-auto">
         {/* Background Glow */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-3xl blur-3xl"
@@ -107,22 +109,25 @@ const DataFlowDiagram = () => {
           }}
         />
 
-        {/* Nodes Flow */}
-        <div className="relative flex flex-col items-center gap-0 py-8">
-          {nodes.map((node, index) => (
-            <div key={index} className="flex flex-col items-center w-full">
-              {/* Node Card */}
+        {/* Flow Layout */}
+        <div className="relative py-8">
+          {/* Top Nodes - Data Sources & Digital Twin */}
+          <div className="flex flex-col items-center gap-6 mb-8">
+            {topNodes.map((node, index) => (
               <motion.div
+                key={index}
                 custom={index}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={nodeVariants}
+                whileHover={{ scale: 1.02 }}
                 className={`
-                  relative w-full max-w-md
+                  relative w-full max-w-lg
                   bg-gradient-to-br ${node.gradient}
                   rounded-2xl p-6 shadow-2xl ${node.glow}
-                  backdrop-blur-sm
+                  backdrop-blur-sm cursor-pointer
+                  transition-all duration-300
                 `}
               >
                 <div className="flex items-center gap-4">
@@ -150,38 +155,226 @@ const DataFlowDiagram = () => {
                   }}
                 />
               </motion.div>
+            ))}
+          </div>
 
-              {/* Arrow (except for last node) */}
-              {index < nodes.length - 1 && (
+          {/* Animated connector from Digital Twin splitting to parallel nodes */}
+          <div className="flex justify-center mb-8">
+            <div className="relative w-px h-12">
+              <div className="absolute inset-0 bg-gradient-to-b from-purple-500 to-transparent" />
+              <motion.div
+                className="absolute w-2 h-2 bg-purple-400 rounded-full left-1/2 -translate-x-1/2"
+                animate={{
+                  top: ['0%', '100%'],
+                  opacity: [0, 1, 0]
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Split indicator */}
+          <div className="flex justify-center mb-4">
+            <div className="relative w-48 h-px">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+            </div>
+          </div>
+
+          {/* Parallel Processing Nodes - ML Forecasting & AI Council */}
+          <div className="grid md:grid-cols-2 gap-8 mb-8 max-w-5xl mx-auto px-4">
+            {parallelNodes.map((node, index) => (
+              <div key={index} className="flex flex-col items-center">
+                {/* Animated connector down to node */}
+                <div className="relative w-px h-8 mb-4">
+                  <div className={`absolute inset-0 bg-gradient-to-b ${index === 0 ? 'from-green-500/50' : 'from-orange-500/50'} to-transparent`} />
+                  <motion.div
+                    className={`absolute w-2 h-2 ${index === 0 ? 'bg-green-400' : 'bg-orange-400'} rounded-full left-1/2 -translate-x-1/2`}
+                    animate={{
+                      top: ['0%', '100%'],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: index * 0.3
+                    }}
+                  />
+                </div>
+
                 <motion.div
-                  custom={index}
+                  custom={index + 2}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  variants={arrowVariants}
-                  className="flex flex-col items-center my-4"
+                  variants={nodeVariants}
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  className={`
+                    relative w-full
+                    bg-gradient-to-br ${node.gradient}
+                    rounded-2xl p-6 shadow-2xl ${node.glow}
+                    backdrop-blur-sm cursor-pointer
+                    transition-all duration-300
+                  `}
                 >
-                  {/* Animated dots flowing down */}
-                  <div className="relative h-16 w-1 bg-gradient-to-b from-slate-700 to-slate-800 rounded-full overflow-hidden">
-                    <motion.div
-                      className="absolute w-2 h-2 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full left-1/2 -translate-x-1/2"
-                      animate={{
-                        top: ['0%', '100%'],
-                        opacity: [0, 1, 0]
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "linear",
-                        delay: index * 0.3
-                      }}
-                    />
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center flex-shrink-0">
+                      <node.icon className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold text-white mb-1">{node.title}</h4>
+                      <p className="text-sm text-white/80">{node.subtitle}</p>
+                    </div>
                   </div>
-                  <ArrowDown className="w-6 h-6 text-slate-600 mt-1" />
+
+                  {/* Pulse effect */}
+                  <motion.div
+                    className="absolute inset-0 rounded-2xl bg-white/10"
+                    animate={{
+                      opacity: [0, 0.2, 0],
+                      scale: [0.95, 1, 0.95]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: (index + 2) * 0.3
+                    }}
+                  />
+
+                  {/* Floating particles */}
+                  <motion.div
+                    className="absolute top-4 right-4 w-1 h-1 bg-white/60 rounded-full"
+                    animate={{
+                      y: [-10, 10, -10],
+                      opacity: [0.3, 0.8, 0.3]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: index * 0.5
+                    }}
+                  />
                 </motion.div>
-              )}
+
+                {/* Animated connector down from node */}
+                <div className="relative w-px h-8 mt-4">
+                  <div className={`absolute inset-0 bg-gradient-to-b from-transparent ${index === 0 ? 'to-green-500/50' : 'to-orange-500/50'}`} />
+                  <motion.div
+                    className={`absolute w-2 h-2 ${index === 0 ? 'bg-green-400' : 'bg-orange-400'} rounded-full left-1/2 -translate-x-1/2`}
+                    animate={{
+                      top: ['0%', '100%'],
+                      opacity: [0, 1, 0]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: 0.5 + index * 0.3
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Merge indicator */}
+          <div className="flex justify-center mb-4">
+            <div className="relative w-48 h-px">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent" />
             </div>
-          ))}
+          </div>
+
+          {/* Animated connector merging to insights */}
+          <div className="flex justify-center mb-8">
+            <div className="relative w-px h-12">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-500" />
+              <motion.div
+                className="absolute w-2 h-2 bg-indigo-400 rounded-full left-1/2 -translate-x-1/2"
+                animate={{
+                  top: ['0%', '100%'],
+                  opacity: [0, 1, 0]
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: 1
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Bottom Node - Actionable Insights */}
+          <div className="flex justify-center">
+            <motion.div
+              custom={4}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={nodeVariants}
+              whileHover={{ scale: 1.05 }}
+              className={`
+                relative w-full max-w-lg
+                bg-gradient-to-br ${bottomNode.gradient}
+                rounded-2xl p-6 shadow-2xl ${bottomNode.glow}
+                backdrop-blur-sm cursor-pointer
+                transition-all duration-300
+              `}
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center flex-shrink-0">
+                  <bottomNode.icon className="w-7 h-7 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-xl font-bold text-white mb-1">{bottomNode.title}</h4>
+                  <p className="text-sm text-white/80">{bottomNode.subtitle}</p>
+                </div>
+              </div>
+
+              {/* Pulse effect */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl bg-white/10"
+                animate={{
+                  opacity: [0, 0.3, 0],
+                  scale: [0.95, 1.05, 0.95]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1.2
+                }}
+              />
+
+              {/* Sparkle effects */}
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white rounded-full"
+                  style={{
+                    top: `${30 + i * 20}%`,
+                    right: `${20 + i * 15}%`
+                  }}
+                  animate={{
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: i * 0.4
+                  }}
+                />
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
 

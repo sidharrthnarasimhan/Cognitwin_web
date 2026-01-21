@@ -1,327 +1,209 @@
 import { motion } from 'framer-motion';
-import { Database, Brain, TrendingUp, Zap, Target, Sparkles, ArrowRight, Server, Cloud, Cpu } from 'lucide-react';
+import { Database, Brain, Server, Cpu, Sparkles, ArrowDown, Zap } from 'lucide-react';
 
 const DataFlowDiagram = () => {
   const nodeVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: i * 0.15
+      }
+    })
+  };
+
+  const arrowVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: (i) => ({
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.5 }
-    }
-  };
-
-  const pathVariants = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: { duration: 1.5, ease: "easeInOut" }
-    }
-  };
-
-  const pulseVariants = {
-    pulse: {
-      scale: [1, 1.05, 1],
-      opacity: [0.5, 0.8, 0.5],
       transition: {
-        duration: 2,
-        repeat: Infinity,
-        ease: "easeInOut"
+        duration: 0.4,
+        delay: i * 0.15 + 0.3
       }
-    }
+    })
   };
 
-  const flowNodes = [
+  const nodes = [
     {
-      id: 'data',
       icon: Database,
-      title: 'Connect Data',
-      subtitle: 'Shopify, Stripe, QuickBooks',
-      color: 'from-blue-500 to-cyan-500',
-      position: 'top-0 left-1/2 -translate-x-1/2'
+      title: 'Data Sources',
+      subtitle: 'Shopify • Stripe • QuickBooks',
+      gradient: 'from-blue-500 to-cyan-500',
+      glow: 'shadow-blue-500/50'
     },
     {
-      id: 'twin',
       icon: Server,
       title: 'Digital Twin',
-      subtitle: 'Business model graph',
-      color: 'from-purple-500 to-pink-500',
-      position: 'top-32 left-0'
+      subtitle: 'Graph-based business model',
+      gradient: 'from-purple-500 to-pink-500',
+      glow: 'shadow-purple-500/50',
+      split: true
     },
     {
-      id: 'ml',
       icon: Cpu,
       title: 'ML Forecasting',
-      subtitle: 'Prophet + LSTM',
-      color: 'from-green-500 to-emerald-500',
-      position: 'top-32 right-0'
+      subtitle: 'Prophet + LSTM models',
+      gradient: 'from-green-500 to-emerald-500',
+      glow: 'shadow-green-500/50'
     },
     {
-      id: 'council',
       icon: Brain,
       title: 'AI Council',
-      subtitle: '6 expert agents',
-      color: 'from-orange-500 to-red-500',
-      position: 'top-64 left-1/4 -translate-x-1/2'
+      subtitle: '6 specialized agents',
+      gradient: 'from-orange-500 to-red-500',
+      glow: 'shadow-orange-500/50',
+      merge: true
     },
     {
-      id: 'insights',
       icon: Sparkles,
-      title: 'Insights',
-      subtitle: 'Actionable recommendations',
-      color: 'from-indigo-500 to-blue-500',
-      position: 'top-64 right-1/4 translate-x-1/2'
+      title: 'Actionable Insights',
+      subtitle: 'Recommendations & optimizations',
+      gradient: 'from-indigo-500 to-blue-500',
+      glow: 'shadow-indigo-500/50'
     }
   ];
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto py-20">
+    <div className="relative w-full max-w-4xl mx-auto py-20">
       {/* Title */}
       <div className="text-center mb-16">
-        <h3 className="text-3xl md:text-4xl font-bold mb-4">
-          The Power of <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Integrated Intelligence</span>
-        </h3>
-        <p className="text-xl text-slate-400">Data flows through our AI-powered platform in real-time</p>
+        <motion.h3
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-3xl md:text-4xl font-bold mb-4"
+        >
+          The Power of{' '}
+          <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Integrated Intelligence
+          </span>
+        </motion.h3>
+        <motion.p
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-xl text-slate-400"
+        >
+          Data flows through our AI-powered platform in real-time
+        </motion.p>
       </div>
 
-      {/* Diagram Container */}
-      <div className="relative h-[500px] md:h-[600px]">
-        {/* Animated Background Glow */}
+      {/* Flow Container */}
+      <div className="relative">
+        {/* Background Glow */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-3xl"
-          variants={pulseVariants}
-          animate="pulse"
+          className="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-3xl blur-3xl"
+          animate={{
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
         />
 
-        {/* SVG Connections */}
-        <svg className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }}>
-          <defs>
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.8" />
-            </linearGradient>
-            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#ec4899" stopOpacity="0.8" />
-            </linearGradient>
-          </defs>
+        {/* Nodes Flow */}
+        <div className="relative flex flex-col items-center gap-0 py-8">
+          {nodes.map((node, index) => (
+            <div key={index} className="flex flex-col items-center w-full">
+              {/* Node Card */}
+              <motion.div
+                custom={index}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={nodeVariants}
+                className={`
+                  relative w-full max-w-md
+                  bg-gradient-to-br ${node.gradient}
+                  rounded-2xl p-6 shadow-2xl ${node.glow}
+                  backdrop-blur-sm
+                `}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center flex-shrink-0">
+                    <node.icon className="w-7 h-7 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-white mb-1">{node.title}</h4>
+                    <p className="text-sm text-white/80">{node.subtitle}</p>
+                  </div>
+                </div>
 
-          {/* Data to Twin */}
-          <motion.path
-            d="M 400 80 L 200 200"
-            stroke="url(#gradient1)"
-            strokeWidth="3"
-            fill="none"
-            variants={pathVariants}
-            initial="hidden"
-            animate="visible"
-            strokeDasharray="5,5"
-          />
+                {/* Pulse effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-2xl bg-white/10"
+                  animate={{
+                    opacity: [0, 0.2, 0],
+                    scale: [0.95, 1, 0.95]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.3
+                  }}
+                />
+              </motion.div>
 
-          {/* Data to ML */}
-          <motion.path
-            d="M 400 80 L 600 200"
-            stroke="url(#gradient1)"
-            strokeWidth="3"
-            fill="none"
-            variants={pathVariants}
-            initial="hidden"
-            animate="visible"
-            strokeDasharray="5,5"
-          />
-
-          {/* Twin to Council */}
-          <motion.path
-            d="M 200 250 L 300 400"
-            stroke="url(#gradient2)"
-            strokeWidth="3"
-            fill="none"
-            variants={pathVariants}
-            initial="hidden"
-            animate="visible"
-            strokeDasharray="5,5"
-            transition={{ delay: 0.5 }}
-          />
-
-          {/* ML to Insights */}
-          <motion.path
-            d="M 600 250 L 500 400"
-            stroke="url(#gradient2)"
-            strokeWidth="3"
-            fill="none"
-            variants={pathVariants}
-            initial="hidden"
-            animate="visible"
-            strokeDasharray="5,5"
-            transition={{ delay: 0.5 }}
-          />
-
-          {/* Council to Insights */}
-          <motion.path
-            d="M 350 450 L 450 450"
-            stroke="url(#gradient2)"
-            strokeWidth="3"
-            fill="none"
-            variants={pathVariants}
-            initial="hidden"
-            animate="visible"
-            strokeDasharray="5,5"
-            transition={{ delay: 1 }}
-          />
-
-          {/* Animated Flow Particles */}
-          <motion.circle
-            r="4"
-            fill="#3b82f6"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: [0, 1, 1, 0],
-              offsetDistance: ['0%', '100%']
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "linear",
-              delay: 0
-            }}
-          >
-            <animateMotion
-              dur="2s"
-              repeatCount="indefinite"
-              path="M 400 80 L 200 200"
-            />
-          </motion.circle>
-
-          <motion.circle
-            r="4"
-            fill="#8b5cf6"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: [0, 1, 1, 0],
-              offsetDistance: ['0%', '100%']
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "linear",
-              delay: 0.5
-            }}
-          >
-            <animateMotion
-              dur="2s"
-              repeatCount="indefinite"
-              path="M 400 80 L 600 200"
-            />
-          </motion.circle>
-        </svg>
-
-        {/* Nodes */}
-        <div className="relative h-full">
-          {/* Data Source Node (Top Center) */}
-          <motion.div
-            className="absolute top-8 left-1/2 -translate-x-1/2"
-            variants={nodeVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl p-6 shadow-2xl shadow-blue-500/50 min-w-[200px]">
-              <div className="flex items-center gap-3 mb-2">
-                <Database className="w-6 h-6 text-white" />
-                <h4 className="text-white font-bold">Connect Data</h4>
-              </div>
-              <p className="text-blue-100 text-sm">Shopify, Stripe, QuickBooks</p>
+              {/* Arrow (except for last node) */}
+              {index < nodes.length - 1 && (
+                <motion.div
+                  custom={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={arrowVariants}
+                  className="flex flex-col items-center my-4"
+                >
+                  {/* Animated dots flowing down */}
+                  <div className="relative h-16 w-1 bg-gradient-to-b from-slate-700 to-slate-800 rounded-full overflow-hidden">
+                    <motion.div
+                      className="absolute w-2 h-2 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full left-1/2 -translate-x-1/2"
+                      animate={{
+                        top: ['0%', '100%'],
+                        opacity: [0, 1, 0]
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "linear",
+                        delay: index * 0.3
+                      }}
+                    />
+                  </div>
+                  <ArrowDown className="w-6 h-6 text-slate-600 mt-1" />
+                </motion.div>
+              )}
             </div>
-          </motion.div>
-
-          {/* Digital Twin Node (Left) */}
-          <motion.div
-            className="absolute top-40 left-8"
-            variants={nodeVariants}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.3 }}
-          >
-            <div className="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-6 shadow-2xl shadow-purple-500/50 min-w-[180px]">
-              <div className="flex items-center gap-3 mb-2">
-                <Server className="w-6 h-6 text-white" />
-                <h4 className="text-white font-bold">Digital Twin</h4>
-              </div>
-              <p className="text-purple-100 text-sm">Business graph model</p>
-            </div>
-          </motion.div>
-
-          {/* ML Forecasting Node (Right) */}
-          <motion.div
-            className="absolute top-40 right-8"
-            variants={nodeVariants}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.3 }}
-          >
-            <div className="bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl p-6 shadow-2xl shadow-green-500/50 min-w-[180px]">
-              <div className="flex items-center gap-3 mb-2">
-                <Cpu className="w-6 h-6 text-white" />
-                <h4 className="text-white font-bold">ML Forecasting</h4>
-              </div>
-              <p className="text-green-100 text-sm">Prophet + LSTM</p>
-            </div>
-          </motion.div>
-
-          {/* AI Council Node (Bottom Left) */}
-          <motion.div
-            className="absolute top-[400px] left-16"
-            variants={nodeVariants}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.6 }}
-          >
-            <div className="bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl p-6 shadow-2xl shadow-orange-500/50 min-w-[180px]">
-              <div className="flex items-center gap-3 mb-2">
-                <Brain className="w-6 h-6 text-white" />
-                <h4 className="text-white font-bold">AI Council</h4>
-              </div>
-              <p className="text-orange-100 text-sm">6 expert agents</p>
-            </div>
-          </motion.div>
-
-          {/* Insights Node (Bottom Right) */}
-          <motion.div
-            className="absolute top-[400px] right-16"
-            variants={nodeVariants}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.6 }}
-          >
-            <div className="bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl p-6 shadow-2xl shadow-indigo-500/50 min-w-[180px]">
-              <div className="flex items-center gap-3 mb-2">
-                <Sparkles className="w-6 h-6 text-white" />
-                <h4 className="text-white font-bold">Insights</h4>
-              </div>
-              <p className="text-indigo-100 text-sm">Actionable recommendations</p>
-            </div>
-          </motion.div>
+          ))}
         </div>
       </div>
 
-      {/* Flow Stats */}
+      {/* Stats */}
       <motion.div
-        className="grid grid-cols-3 gap-8 mt-16 max-w-3xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.8 }}
+        className="grid grid-cols-3 gap-8 mt-16 max-w-3xl mx-auto"
       >
         <div className="text-center">
           <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2">
             &lt;2s
           </div>
-          <div className="text-slate-400 text-sm">Dashboard Load Time</div>
+          <div className="text-slate-400 text-sm">End-to-end Processing</div>
         </div>
         <div className="text-center">
           <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
             Real-time
           </div>
-          <div className="text-slate-400 text-sm">Data Synchronization</div>
+          <div className="text-slate-400 text-sm">Data Sync</div>
         </div>
         <div className="text-center">
           <div className="text-3xl font-bold bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-transparent mb-2">

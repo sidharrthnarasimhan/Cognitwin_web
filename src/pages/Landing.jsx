@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { Brain, TrendingUp, Sparkles, Target, Users, Zap, Building2, ShoppingCart, UtensilsCrossed, Briefcase, Stethoscope, Truck, Code, ArrowRight, CheckCircle2, BarChart3, Layers, Shield, Rocket } from 'lucide-react';
+import { Brain, TrendingUp, Sparkles, Target, Users, Zap, Building2, ShoppingCart, UtensilsCrossed, Briefcase, Stethoscope, Truck, Code, ArrowRight, CheckCircle2, BarChart3, Layers, Shield, Rocket, AlertTriangle, LineChart, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import DataFlowDiagram from '@/components/DataFlowDiagram';
 
 const Landing = () => {
   const fadeInUp = {
@@ -81,7 +82,13 @@ const Landing = () => {
               variants={fadeInUp}
               className="text-xl md:text-2xl text-slate-300 mb-8 max-w-3xl mx-auto"
             >
-              CogniTwin builds a living digital twin of your business. Predict outcomes, simulate decisions, and get AI-powered insights from our multi-agent council.
+              Forecasting • Anomaly Detection • Cognitive Agents • Operational Optimization
+            </motion.p>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg text-slate-400 mb-8 max-w-2xl mx-auto"
+            >
+              Multi-industry Digital Business Twin Platform with AI-powered insights. Connect your data and let 6 specialized AI agents analyze your business in real-time.
             </motion.p>
 
             <motion.div
@@ -100,19 +107,44 @@ const Landing = () => {
             {/* Stats */}
             <motion.div
               variants={fadeInUp}
-              className="grid grid-cols-3 gap-8 mt-16 max-w-3xl mx-auto"
+              className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto"
             >
-              <div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">≥85%</div>
-                <div className="text-slate-400">Forecast Accuracy</div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-2">85-90%</div>
+                <div className="text-slate-400 text-sm">Forecast Accuracy</div>
               </div>
-              <div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">&lt;10s</div>
-                <div className="text-slate-400">Simulation Speed</div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">&lt;10s</div>
+                <div className="text-slate-400 text-sm">Simulation Speed</div>
               </div>
-              <div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">6</div>
-                <div className="text-slate-400">Industry Modules</div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-2">6</div>
+                <div className="text-slate-400 text-sm">AI Agents</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent mb-2">99.9%</div>
+                <div className="text-slate-400 text-sm">Uptime SLA</div>
+              </div>
+            </motion.div>
+
+            {/* Investor/Trust Indicators */}
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-wrap items-center justify-center gap-6 mt-12 text-slate-400 text-sm"
+            >
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-green-400" />
+                <span>SOC 2 Aligned</span>
+              </div>
+              <div className="w-px h-4 bg-slate-700"></div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-blue-400" />
+                <span>Multi-Tenant Secure</span>
+              </div>
+              <div className="w-px h-4 bg-slate-700"></div>
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-purple-400" />
+                <span>Real-time Insights</span>
               </div>
             </motion.div>
           </motion.div>
@@ -159,6 +191,13 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Data Flow Diagram */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <DataFlowDiagram />
+        </div>
+      </section>
+
       {/* Core Features */}
       <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -167,43 +206,35 @@ const Landing = () => {
             <p className="text-xl text-slate-400">Everything you need to simulate and optimize your business</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
                 icon: TrendingUp,
-                title: 'Advanced Forecasting',
-                desc: 'Predict revenue, demand, churn, inventory needs, and staffing requirements with ML-powered models',
-                features: ['Prophet & PyTorch models', 'Real-time updates', '85%+ accuracy']
+                title: 'AI Forecasting',
+                desc: 'Predict revenue, demand, churn with Prophet + LSTM models. 85-90% accuracy out of the box.',
+                features: ['Prophet & PyTorch models', 'Multi-horizon predictions', 'Ensemble learning'],
+                gradient: 'from-blue-500 to-cyan-500'
               },
               {
-                icon: Target,
-                title: 'Scenario Simulation',
-                desc: 'Test pricing changes, staffing levels, inventory strategies, and marketing campaigns before committing',
-                features: ['What-if analysis', 'Risk assessment', 'Instant results']
+                icon: AlertTriangle,
+                title: 'Anomaly Detection',
+                desc: 'Real-time pattern deviation alerts with industry-specific thresholds and context.',
+                features: ['Isolation Forest baseline', 'Industry thresholds', 'Root cause analysis'],
+                gradient: 'from-orange-500 to-red-500'
               },
               {
                 icon: Brain,
-                title: 'AI Council Insights',
-                desc: 'Get multi-perspective analysis from specialized AI agents: Analyst, Strategist, Risk Officer & more',
-                features: ['6 expert agents', 'Confidence scoring', 'Explainable AI']
+                title: 'Cognitive Agents',
+                desc: 'Multi-agent AI Council with 6 specialized agents debating and synthesizing insights.',
+                features: ['6 expert agents', 'Multi-agent debate', 'Confidence scoring'],
+                gradient: 'from-purple-500 to-pink-500'
               },
               {
-                icon: Layers,
-                title: 'Business Modeling',
-                desc: 'Automatic creation of revenue, cost, customer, and operational models tailored to your industry',
-                features: ['Auto-generated models', 'Industry-specific', 'Continuously learning']
-              },
-              {
-                icon: BarChart3,
-                title: 'Synthetic Data',
-                desc: 'Generate realistic customer personas, transactions, and demand curves for testing and planning',
-                features: ['CTGAN powered', 'Privacy-safe', 'Unlimited scenarios']
-              },
-              {
-                icon: Shield,
-                title: 'Enterprise Security',
-                desc: 'SOC 2 aligned with 99.9% uptime, encryption at rest and in transit, and full RBAC support',
-                features: ['SOC 2 compliance', 'Audit logs', 'SSO ready']
+                icon: Settings,
+                title: 'Optimization',
+                desc: 'Industry-specific operational recommendations for inventory, pricing, and staffing.',
+                features: ['Industry playbooks', 'Constraint solving', 'Actionable insights'],
+                gradient: 'from-green-500 to-emerald-500'
               }
             ].map((feature, i) => (
               <motion.div
@@ -212,23 +243,88 @@ const Landing = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-slate-800/50 border border-slate-700 rounded-xl p-8 hover:border-blue-500/50 transition-all"
+                className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-blue-500/50 transition-all"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+                <div className={`w-12 h-12 bg-gradient-to-br ${feature.gradient} rounded-lg flex items-center justify-center mb-4`}>
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
-                <p className="text-slate-400 mb-4">{feature.desc}</p>
+                <p className="text-slate-400 mb-4 text-sm">{feature.desc}</p>
                 <ul className="space-y-2">
                   {feature.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-2 text-sm text-slate-300">
-                      <CheckCircle2 className="w-4 h-4 text-green-400" />
+                    <li key={j} className="flex items-center gap-2 text-xs text-slate-300">
+                      <CheckCircle2 className="w-3 h-3 text-green-400 flex-shrink-0" />
                       {f}
                     </li>
                   ))}
                 </ul>
               </motion.div>
             ))}
+          </div>
+
+          {/* Feature Detail Cards */}
+          <div className="mt-16 grid md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 border border-blue-500/20 rounded-2xl p-8"
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Layers className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">Your Competitive Moat</h3>
+                  <p className="text-slate-400">What makes CogniTwin different</p>
+                </div>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300"><strong className="text-white">Multi-Agent Orchestration:</strong> 1,500+ LOC of custom agent debate logic</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300"><strong className="text-white">Industry Playbooks:</strong> 300+ domain expertise rules across 6 industries</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300"><strong className="text-white">Integrated Intelligence:</strong> End-to-end workflow from data to insights</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-purple-500/20 rounded-2xl p-8"
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">Enterprise-Ready</h3>
+                  <p className="text-slate-400">Built for scale and security</p>
+                </div>
+              </div>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300"><strong className="text-white">99.9% Uptime SLA:</strong> Production-grade infrastructure</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300"><strong className="text-white">SOC 2 Aligned:</strong> Enterprise security & compliance</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-slate-300"><strong className="text-white">Multi-Tenant:</strong> Complete data isolation per customer</span>
+                </li>
+              </ul>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -267,8 +363,124 @@ const Landing = () => {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-xl text-slate-400">Scale through software, not services</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Starter Tier */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0 }}
+              className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-blue-500/50 transition-all"
+            >
+              <h3 className="text-2xl font-bold mb-2">Starter</h3>
+              <div className="flex items-baseline gap-2 mb-6">
+                <span className="text-4xl font-bold">$299</span>
+                <span className="text-slate-400">/month</span>
+              </div>
+              <p className="text-slate-400 mb-6">Perfect for small businesses getting started with AI insights</p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  'Open-source forecasting models',
+                  'Basic anomaly detection',
+                  'LLM Council (generic prompts)',
+                  'Rule-based optimization',
+                  'Email support'
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-300">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button className="w-full bg-slate-700 hover:bg-slate-600">Start Free Trial</Button>
+            </motion.div>
+
+            {/* Professional Tier - Highlighted */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-gradient-to-br from-blue-900/40 to-purple-900/40 border-2 border-blue-500 rounded-2xl p-8 relative"
+            >
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                Most Popular
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Professional</h3>
+              <div className="flex items-baseline gap-2 mb-6">
+                <span className="text-4xl font-bold">$799</span>
+                <span className="text-slate-400">/month</span>
+              </div>
+              <p className="text-slate-400 mb-6">Industry-specific intelligence for growing businesses</p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  'Everything in Starter, plus:',
+                  'Industry-specific playbooks ⭐',
+                  'Enhanced Industry Expert agent',
+                  'Custom anomaly thresholds',
+                  'Priority support',
+                  'Dedicated success manager'
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-300">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                Start Free Trial
+              </Button>
+            </motion.div>
+
+            {/* Enterprise Tier */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8 hover:border-purple-500/50 transition-all"
+            >
+              <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
+              <div className="flex items-baseline gap-2 mb-6">
+                <span className="text-4xl font-bold">$2,999</span>
+                <span className="text-slate-400">/month</span>
+              </div>
+              <p className="text-slate-400 mb-6">Advanced features and dedicated support for scale</p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  'Everything in Professional, plus:',
+                  'Per-customer fine-tuning',
+                  'Custom integrations',
+                  'Advanced optimization',
+                  'SLA guarantees',
+                  'Optional: Custom forecasting models'
+                ].map((feature, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                    <span className="text-slate-300">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                Contact Sales
+              </Button>
+            </motion.div>
+          </div>
+
+          <p className="text-center text-slate-400 mt-8">14-day free trial • No credit card required • Cancel anytime</p>
+        </div>
+      </section>
+
       {/* AI Council Section */}
-      <section id="council" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="council" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900/50">
         <div className="max-w-7xl mx-auto">
           <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-500/20 rounded-3xl p-12">
             <div className="text-center mb-12">
